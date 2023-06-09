@@ -12,6 +12,11 @@ import org.springframework.boot.test.json.JsonContent;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,8 +27,18 @@ public class BookJsonTests {
 
     @Test
     void testSerialize() throws IOException {
-        final Book book = new Book("1231231231", "Title", "Author", BigDecimal.valueOf(9.90));
+        final Instant now = Instant.now();
+        final Book book = new Book(1L,
+                "1231231231",
+                "Title",
+                "Author",
+                BigDecimal.valueOf(9.90),
+                now,
+                now,
+                0);
         final JsonContent<Book> jsonContent = json.write(book);
+        assertThat(jsonContent).extractingJsonPathNumberValue("@.id")
+                .usingComparator(Comparator.comparingLong(Number::longValue)).isEqualTo(1L);
         assertThat(jsonContent).extractingJsonPathStringValue("@.isbn")
                 .isEqualTo(book.isbn());
         assertThat(jsonContent).extractingJsonPathStringValue("@.author")
@@ -33,15 +48,22 @@ public class BookJsonTests {
         assertThat(jsonContent).extractingJsonPathNumberValue("@.price")
                 .is(new Condition<>((val) -> BigDecimal.valueOf(val.doubleValue()).compareTo(book.price()) == 0,
                         "price matches"));
+        assertThat(jsonContent).extractingJsonPathStringValue("@.createdDate")
+                .isEqualTo(DateTimeFormatter.ISO_INSTANT.format(now));
+        assertThat(jsonContent).extractingJsonPathStringValue("@.lastModifiedDate")
+                .isEqualTo(DateTimeFormatter.ISO_INSTANT.format(now));
     }
 
     @Test
     void testDeserialize() throws IOException {
         final var content = """
                 {
+                    "id" : 1,
                     "isbn": "1234567890",
                     "title": "Title",
                     "author": "Author",
+                    "createdDate": "2023-06-09T12:55:00Z",
+                    "lastModifiedDate": "2023-06-09T12:55:00Z",
                     "price": 9.90
                 }
                 """;
@@ -49,6 +71,13 @@ public class BookJsonTests {
                 .usingRecursiveComparison(RecursiveComparisonConfiguration.builder()
                         .withComparatorForType(BigDecimalComparator.BIG_DECIMAL_COMPARATOR, BigDecimal.class)
                         .build())
-                .isEqualTo(new Book("1234567890", "Title", "Author", BigDecimal.valueOf(9.90)));
+                .isEqualTo(new Book(1L,
+                        "1234567890",
+                        "Title",
+                        "Author",
+                        BigDecimal.valueOf(9.90),
+                        LocalDateTime.of(2023, 6, 9, 12, 55, 0).toInstant(ZoneOffset.UTC),
+                        LocalDateTime.of(2023, 6, 9, 12, 55, 0).toInstant(ZoneOffset.UTC),
+                        0));
     }
 }

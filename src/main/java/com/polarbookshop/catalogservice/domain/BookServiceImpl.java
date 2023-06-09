@@ -42,10 +42,13 @@ public class BookServiceImpl implements BookService {
     public Book editDetails(String isbn, Book book) {
         return bookRepository.findByIsbn(isbn)
                 .map(existingBook -> {
-                    final Book bookToUpdate = new Book(existingBook.isbn(),
+                    final Book bookToUpdate = new Book(existingBook.id(), existingBook.isbn(),
                             book.title(),
                             book.author(),
-                            book.price());
+                            book.price(),
+                            existingBook.createdDate(),
+                            existingBook.lastModifiedDate(),
+                            existingBook.version());
                     return bookRepository.save(bookToUpdate);
                 })
                 .orElseGet(() -> bookRepository.save(book));

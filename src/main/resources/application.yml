@@ -10,6 +10,13 @@ polar:
   greeting: Hello from local book catalog!
   test-data.enabled: true
 spring:
+  datasource:
+    username: user
+    password: password
+    url: jdbc:postgresql://localhost:25432/polardb_catalog
+    hikari:
+      connection-timeout: 2000
+      maximum-pool-size: 5
   application.name: catalog-service
   config.import: "optional:configserver:"
   cloud:
