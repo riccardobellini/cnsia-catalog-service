@@ -6,6 +6,7 @@ server:
     threads:
       max: 50
       min-spare: 5
+  shutdown: graceful
 polar:
   greeting: Hello from local book catalog!
 spring:
@@ -17,6 +18,8 @@ spring:
       connection-timeout: 2000
       maximum-pool-size: 5
   application.name: catalog-service
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
   config.import: "optional:configserver:"
   cloud:
     config:
