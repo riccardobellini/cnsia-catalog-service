@@ -21,7 +21,11 @@ class CatalogServiceApplicationTests {
 
     @Test
     void whenPostRequestThenBookCreated() {
-        final Book book = Book.of("1233211231", "Title", "Author", BigDecimal.valueOf(9.90));
+        final Book book = Book.of("1233211231",
+                "Title",
+                "Author",
+                BigDecimal.valueOf(9.90),
+                "Polarsophia");
         webTestClient
                 .post()
                 .uri("/books")

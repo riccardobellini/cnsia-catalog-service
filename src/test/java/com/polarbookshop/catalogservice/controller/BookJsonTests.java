@@ -33,6 +33,7 @@ public class BookJsonTests {
                 "Title",
                 "Author",
                 BigDecimal.valueOf(9.90),
+                "Polarsophia",
                 now,
                 now,
                 0);
@@ -48,6 +49,8 @@ public class BookJsonTests {
         assertThat(jsonContent).extractingJsonPathNumberValue("@.price")
                 .is(new Condition<>((val) -> BigDecimal.valueOf(val.doubleValue()).compareTo(book.price()) == 0,
                         "price matches"));
+        assertThat(jsonContent).extractingJsonPathStringValue("@.publisher")
+                .isEqualTo(book.publisher());
         assertThat(jsonContent).extractingJsonPathStringValue("@.createdDate")
                 .isEqualTo(DateTimeFormatter.ISO_INSTANT.format(now));
         assertThat(jsonContent).extractingJsonPathStringValue("@.lastModifiedDate")
@@ -64,6 +67,7 @@ public class BookJsonTests {
                     "author": "Author",
                     "createdDate": "2023-06-09T12:55:00Z",
                     "lastModifiedDate": "2023-06-09T12:55:00Z",
+                    "publisher": "Polarsophia",
                     "price": 9.90
                 }
                 """;
@@ -76,6 +80,7 @@ public class BookJsonTests {
                         "Title",
                         "Author",
                         BigDecimal.valueOf(9.90),
+                        "Polarsophia",
                         LocalDateTime.of(2023, 6, 9, 12, 55, 0).toInstant(ZoneOffset.UTC),
                         LocalDateTime.of(2023, 6, 9, 12, 55, 0).toInstant(ZoneOffset.UTC),
                         0));

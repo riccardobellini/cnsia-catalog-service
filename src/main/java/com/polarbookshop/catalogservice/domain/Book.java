@@ -27,6 +27,7 @@ public record Book(
         @NotNull(message = "Book price must be defined")
         @Positive(message = "Book price must be greater than 0")
         BigDecimal price,
+        String publisher,
         @CreatedDate
         Instant createdDate,
         @LastModifiedDate
@@ -35,12 +36,13 @@ public record Book(
         @JsonIgnore
         int version) {
 
-    public static Book of(String isbn, String title, String author, BigDecimal price) {
+    public static Book of(String isbn, String title, String author, BigDecimal price, String publisher) {
         return new Book(null,
                 isbn,
                 title,
                 author,
                 price,
+                publisher,
                 null,
                 null,
                 0);

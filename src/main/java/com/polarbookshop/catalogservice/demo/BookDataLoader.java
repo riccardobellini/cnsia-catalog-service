@@ -27,11 +27,13 @@ public class BookDataLoader {
         final var book1 = Book.of("1234567891",
                 "Northern Lights",
                 "Lyra Silverstar",
-                BigDecimal.valueOf(9.90));
+                BigDecimal.valueOf(9.90),
+                "Polarsophia");
         final var book2 = Book.of("1234567892",
                 "Polar Journey",
                 "Iorek Polarson",
-                BigDecimal.valueOf(12.90));
+                BigDecimal.valueOf(12.90),
+                "Polarsophia");
 
         bookRepository.saveAll(List.of(book1, book2));
     }
