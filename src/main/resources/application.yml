@@ -8,7 +8,6 @@ server:
       min-spare: 5
 polar:
   greeting: Hello from local book catalog!
-  test-data.enabled: true
 spring:
   datasource:
     username: user
