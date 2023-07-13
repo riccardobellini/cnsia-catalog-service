@@ -10,6 +10,11 @@ server:
 polar:
   greeting: Hello from local book catalog!
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/PolarBookshop
   datasource:
     username: user
     password: password
