@@ -21,8 +21,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.math.BigDecimal;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -82,7 +80,7 @@ class CatalogServiceApplicationTests {
         final Book book = Book.of("1233211231",
                 "Title",
                 "Author",
-                BigDecimal.valueOf(9.90),
+                9.90,
                 "Polarsophia");
         webTestClient
                 .post()
@@ -103,7 +101,7 @@ class CatalogServiceApplicationTests {
         final Book book = Book.of("1233211231",
                 "Title",
                 "Author",
-                BigDecimal.valueOf(9.90),
+                9.90,
                 "Polarsophia");
         webTestClient
                 .post()

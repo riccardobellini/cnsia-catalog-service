@@ -2,7 +2,6 @@ package com.polarbookshop.catalogservice.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,7 +9,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 
 public record Book(
@@ -24,9 +22,8 @@ public record Book(
         String title,
         @NotBlank(message = "The author cannot be empty")
         String author,
-        @NotNull(message = "Book price must be defined")
         @Positive(message = "Book price must be greater than 0")
-        BigDecimal price,
+        double price,
         String publisher,
         @CreatedDate
         Instant createdDate,
@@ -36,7 +33,7 @@ public record Book(
         @JsonIgnore
         int version) {
 
-    public static Book of(String isbn, String title, String author, BigDecimal price, String publisher) {
+    public static Book of(String isbn, String title, String author, double price, String publisher) {
         return new Book(null,
                 isbn,
                 title,

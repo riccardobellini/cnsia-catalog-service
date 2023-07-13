@@ -1,7 +1,6 @@
 package com.polarbookshop.catalogservice.controller;
 
 import com.polarbookshop.catalogservice.domain.Book;
-import org.assertj.core.api.Condition;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.assertj.core.util.BigDecimalComparator;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ public class BookJsonTests {
                 "1231231231",
                 "Title",
                 "Author",
-                BigDecimal.valueOf(9.90),
+                9.90,
                 "Polarsophia",
                 now,
                 now,
@@ -47,8 +46,7 @@ public class BookJsonTests {
         assertThat(jsonContent).extractingJsonPathStringValue("@.title")
                 .isEqualTo(book.title());
         assertThat(jsonContent).extractingJsonPathNumberValue("@.price")
-                .is(new Condition<>((val) -> BigDecimal.valueOf(val.doubleValue()).compareTo(book.price()) == 0,
-                        "price matches"));
+                .isEqualTo(9.90);
         assertThat(jsonContent).extractingJsonPathStringValue("@.publisher")
                 .isEqualTo(book.publisher());
         assertThat(jsonContent).extractingJsonPathStringValue("@.createdDate")
@@ -79,7 +77,7 @@ public class BookJsonTests {
                         "1234567890",
                         "Title",
                         "Author",
-                        BigDecimal.valueOf(9.90),
+                        9.90,
                         "Polarsophia",
                         LocalDateTime.of(2023, 6, 9, 12, 55, 0).toInstant(ZoneOffset.UTC),
                         LocalDateTime.of(2023, 6, 9, 12, 55, 0).toInstant(ZoneOffset.UTC),

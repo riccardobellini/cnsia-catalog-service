@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +31,7 @@ class BookRepositoryJdbcTests {
         final Book book = Book.of(isbn,
                 "Title",
                 "Author",
-                BigDecimal.valueOf(9.9),
+                9.9,
                 "Polarsophia");
         jdbcAggregateTemplate.insert(book);
         final Optional<Book> actualBook = bookRepository.findByIsbn(isbn);

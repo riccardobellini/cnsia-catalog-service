@@ -7,7 +7,6 @@ import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +26,7 @@ class BookValidationTest {
         final var book = Book.of("1324567891",
                 "Title",
                 "Author",
-                BigDecimal.valueOf(9.90),
+                9.90,
                 "Polarsophia");
         final Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).isEmpty();
@@ -38,7 +37,7 @@ class BookValidationTest {
         final Book book = Book.of("AD12123FWW43",
                 "Title",
                 "Author",
-                BigDecimal.valueOf(9.90),
+                9.90,
                 "Polarsophia");
         final Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).isNotEmpty();

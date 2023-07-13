@@ -13,8 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
-
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -66,7 +64,7 @@ public class BookControllerMvcTests {
     @Test
     void whenGetBookExistingAndAuthenticatedThenShouldReturn200() throws Exception {
         final String isbn = "7373731394";
-        final Book expectedBook = Book.of(isbn, "Title", "Author", BigDecimal.valueOf(9.90), "Polarsophia");
+        final Book expectedBook = Book.of(isbn, "Title", "Author", 9.90, "Polarsophia");
         given(bookService.viewDetails(isbn)).willReturn(expectedBook);
         mockMvc
                 .perform(get("/books/" + isbn)
