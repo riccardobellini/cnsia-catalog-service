@@ -35,6 +35,8 @@ public class BookJsonTests {
                 "Polarsophia",
                 now,
                 now,
+                "John",
+                "John",
                 0);
         final JsonContent<Book> jsonContent = json.write(book);
         assertThat(jsonContent).extractingJsonPathNumberValue("@.id")
@@ -53,6 +55,10 @@ public class BookJsonTests {
                 .isEqualTo(DateTimeFormatter.ISO_INSTANT.format(now));
         assertThat(jsonContent).extractingJsonPathStringValue("@.lastModifiedDate")
                 .isEqualTo(DateTimeFormatter.ISO_INSTANT.format(now));
+        assertThat(jsonContent).extractingJsonPathStringValue("@.createdBy")
+                .isEqualTo("John");
+        assertThat(jsonContent).extractingJsonPathStringValue("@.lastModifiedBy")
+                .isEqualTo("John");
     }
 
     @Test
@@ -66,7 +72,9 @@ public class BookJsonTests {
                     "createdDate": "2023-06-09T12:55:00Z",
                     "lastModifiedDate": "2023-06-09T12:55:00Z",
                     "publisher": "Polarsophia",
-                    "price": 9.90
+                    "price": 9.90,
+                    "createdBy": "John",
+                    "lastModifiedBy": "John"
                 }
                 """;
         assertThat(json.parse(content))
@@ -81,6 +89,8 @@ public class BookJsonTests {
                         "Polarsophia",
                         LocalDateTime.of(2023, 6, 9, 12, 55, 0).toInstant(ZoneOffset.UTC),
                         LocalDateTime.of(2023, 6, 9, 12, 55, 0).toInstant(ZoneOffset.UTC),
+                        "John",
+                        "John",
                         0));
     }
 }

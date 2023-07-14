@@ -49,6 +49,8 @@ public class BookServiceImpl implements BookService {
                             book.publisher(),
                             existingBook.createdDate(),
                             existingBook.lastModifiedDate(),
+                            existingBook.createdBy(),
+                            existingBook.lastModifiedBy(),
                             existingBook.version());
                     return bookRepository.save(bookToUpdate);
                 })

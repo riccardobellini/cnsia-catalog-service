@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Version;
+import org.springframework.data.annotation.*;
 
 import java.time.Instant;
 
@@ -29,6 +26,10 @@ public record Book(
         Instant createdDate,
         @LastModifiedDate
         Instant lastModifiedDate,
+        @CreatedBy
+        String createdBy,
+        @LastModifiedBy
+        String lastModifiedBy,
         @Version
         @JsonIgnore
         int version) {
@@ -40,6 +41,8 @@ public record Book(
                 author,
                 price,
                 publisher,
+                null,
+                null,
                 null,
                 null,
                 0);
