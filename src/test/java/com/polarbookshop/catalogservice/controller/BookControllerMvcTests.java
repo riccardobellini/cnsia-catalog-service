@@ -13,6 +13,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
+
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -32,6 +34,14 @@ public class BookControllerMvcTests {
 
     @MockBean
     private JwtDecoder jwtDecoder;
+
+    @Test
+    void whenGetAllBooksNotAuthenticatedThenShouldReturn200() throws Exception {
+        given(bookService.viewList())
+                .willReturn(Collections.emptyList());
+        mockMvc.perform(get("/books"))
+                .andExpect(status().isOk());
+    }
 
     @Test
     void whenGetBookNotExistingAndAuthenticatedThenShouldReturn404() throws Exception {
@@ -82,7 +92,7 @@ public class BookControllerMvcTests {
     }
 
     @Test
-    void whenDeleteBookNotAuthenticatedThenHttp204() throws Exception {
+    void whenDeleteBookNotAuthenticatedThenHttp401() throws Exception {
         final String isbn = "1233211231";
         mockMvc.perform(delete("/books/%s".formatted(isbn)))
                 .andExpect(status().isUnauthorized());

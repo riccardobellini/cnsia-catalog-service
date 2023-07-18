@@ -113,4 +113,13 @@ class CatalogServiceApplicationTests {
                 .expectStatus().isForbidden();
     }
 
+    @Test
+    void whenGetRequestUnauthorizedThen200() {
+        webTestClient
+                .get()
+                .uri("/books")
+                .exchange()
+                .expectStatus().isOk();
+    }
+
 }
