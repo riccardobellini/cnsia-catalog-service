@@ -43,11 +43,10 @@ spec:
           env:
             - name: BPL_JVM_THREAD_COUNT
               value: "50"
-            - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://polar-postgres/polardb_catalog
-            - name: POLAR_TEST_DATA_ENABLED
-              value: "true"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: http://config-service
-            - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
-              value: http://polar-keycloak/realms/PolarBookshop
+          volumeMounts:
+            - mountPath: /workspace/config
+              name: catalog-config-volume
+      volumes:
+        - name: catalog-config-volume
+          configMap:
+            name: catalog-config
